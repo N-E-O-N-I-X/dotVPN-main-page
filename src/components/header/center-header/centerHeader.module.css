@@ -21,7 +21,6 @@
   font-weight: bold;
 }
 
-
 .focusLine {
   position: relative;
 }
@@ -50,8 +49,4 @@
 .logoSvgPath {
   stroke: var(--main-color);
   fill: var(--main-color);
-}
-
-.logoLink {
-  margin-top: 4px;
 }

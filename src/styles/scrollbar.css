@@ -15,9 +15,8 @@ body::-webkit-scrollbar {
   top: 20px;
   bottom: 20px;
   width: 12px;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 9999;
-
   opacity: 0;
   transform: translateX(4px);
   transition: opacity .4s ease, transform .4s ease;
@@ -33,7 +32,8 @@ body::-webkit-scrollbar {
   left: 0;
   width: 12px;
   border-radius: 5px;
-  background: var(--scrolbar-color);  /* твой цвет */
+  background: var(--scrolbar-color); 
+  cursor: pointer;
 }
 
 @media (width < 600px) {

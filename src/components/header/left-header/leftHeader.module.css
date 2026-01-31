@@ -26,10 +26,6 @@
   fill: var(--main-color);
 }
 
-.logoLink {
-  margin-top: 10px;
-}
-
 @media (width > 1400px) {
   .logoLink {
     cursor: default;

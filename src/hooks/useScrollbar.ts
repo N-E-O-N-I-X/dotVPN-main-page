@@ -2,112 +2,127 @@ import { useEffect } from 'react';
 
 export function useScrollbar() {
   useEffect(() => {
-    const overlay = document.createElement('div');
-    overlay.className = 'scrollbar-overlay';
-    overlay.innerHTML = '<div class="scrollbar-thumb"></div>';
-    document.body.appendChild(overlay);
+    const scrollbarTrack = document.createElement('div');
+    scrollbarTrack.className = 'scrollbar-overlay';
+    
+    const scrollbarThumb = document.createElement('div');
+    scrollbarThumb.className = 'scrollbar-thumb';
+    
+    scrollbarTrack.appendChild(scrollbarThumb);
+    document.body.appendChild(scrollbarTrack);
 
-    const thumb = overlay.querySelector('.scrollbar-thumb') as HTMLElement;
-    let hideT: ReturnType<typeof setTimeout> | null = null;
-    let raf: number | null = null;
+    let hideTimer: number;
     let isDragging = false;
 
-    function clamp(v: number, min: number, max: number) {
-      return Math.max(min, Math.min(max, v));
-    }
+    const updateScrollbar = () => {
+      const scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      const trackHeight = scrollbarTrack.clientHeight;
+      
+      const thumbHeight = Math.max(
+        (window.innerHeight / document.documentElement.scrollHeight) * trackHeight,
+        40 
+      );
+    
+      const thumbTop = scrollPercentage * (trackHeight - thumbHeight);
 
-    function updateThumb() {
-      raf = null;
-      const doc = document.documentElement;
-      const scrollTop = window.scrollY || doc.scrollTop;
-      const scrollHeight = doc.scrollHeight;
-      const clientHeight = doc.clientHeight;
-      const track = overlay.clientHeight;
-      const maxScroll = Math.max(1, scrollHeight - clientHeight);
+      scrollbarThumb.style.height = `${thumbHeight}px`;
+      scrollbarThumb.style.top = `${thumbTop}px`;
+    };
 
-      const thumbH = clamp((clientHeight / scrollHeight) * track / 3, 14, track);
-      const maxTop = track - thumbH;
-      const top = (scrollTop / maxScroll) * maxTop;
-
-      thumb.style.height = `${thumbH}px`;
-      thumb.style.top = `${top}px`;
-    }
-
-    function scheduleUpdate() {
-      if (raf) return;
-      raf = requestAnimationFrame(updateThumb);
-    }
-
-    function showThenHide() {
-      overlay.classList.add('is-visible');
-      if (hideT) clearTimeout(hideT);
-      hideT = setTimeout(() => {
-        if (!isDragging) overlay.classList.remove('is-visible');
+    const showScrollbar = () => {
+      scrollbarTrack.classList.add('is-visible');
+      clearTimeout(hideTimer);
+      hideTimer = window.setTimeout(() => {
+        if (!isDragging) {
+          scrollbarTrack.classList.remove('is-visible');
+        }
       }, 700);
-    }
+    };
 
-    // Клик по треку - прыжок
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        const rect = overlay.getBoundingClientRect();
-        const clickY = e.clientY - rect.top;
-        const doc = document.documentElement;
-        const scrollHeight = doc.scrollHeight;
-        const clientHeight = doc.clientHeight;
-        const maxScroll = scrollHeight - clientHeight;
-        const targetScroll = (clickY / overlay.clientHeight) * maxScroll;
-        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    const handleTrackClick = (e: MouseEvent) => {
+      if (e.target === scrollbarTrack) {
+        const trackRect = scrollbarTrack.getBoundingClientRect();
+        const clickY = e.clientY - trackRect.top;
+        const trackHeight = scrollbarTrack.clientHeight;
+        const scrollPercentage = clickY / trackHeight;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        
+        window.scrollTo({
+          top: scrollPercentage * maxScroll,
+          behavior: 'smooth'
+        });
       }
-    });
+    };
 
-    // Драг ползунка
     let startY = 0;
-    let startScroll = 0;
+    let startScrollTop = 0;
 
-    thumb.addEventListener('mousedown', (e) => {
+    const handleThumbMouseDown = (e: MouseEvent) => {
       isDragging = true;
       startY = e.clientY;
-      startScroll = window.scrollY;
-      overlay.classList.add('is-visible');
+      startScrollTop = window.scrollY;
+      scrollbarTrack.classList.add('is-visible');
+      document.body.style.userSelect = 'none';
       e.preventDefault();
-    });
+    };
 
-    window.addEventListener('mousemove', (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
-      const deltaY = e.clientY - startY;
-      const doc = document.documentElement;
-      const scrollHeight = doc.scrollHeight;
-      const clientHeight = doc.clientHeight;
-      const maxScroll = scrollHeight - clientHeight;
-      const track = overlay.clientHeight;
-      const thumbH = parseFloat(thumb.style.height);
-      const maxTop = track - thumbH;
-      const scrollDelta = (deltaY / maxTop) * maxScroll;
-      window.scrollTo({ top: startScroll + scrollDelta });
-    });
 
-    window.addEventListener('mouseup', () => {
+      const deltaY = e.clientY - startY;
+      const trackHeight = scrollbarTrack.clientHeight;
+      const thumbHeight = parseFloat(scrollbarThumb.style.height);
+      const maxThumbTop = trackHeight - thumbHeight;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      
+      const scrollDelta = (deltaY / maxThumbTop) * maxScroll;
+      
+      window.scrollTo(0, startScrollTop + scrollDelta);
+      
+      requestAnimationFrame(updateScrollbar);
+    };
+
+    const handleMouseUp = () => {
       if (isDragging) {
         isDragging = false;
-        showThenHide();
+        document.body.style.userSelect = ''; 
+        showScrollbar();
       }
-    });
+    };
 
-    scheduleUpdate();
-    window.addEventListener('scroll', () => {
-      scheduleUpdate();
-      showThenHide();
-    }, { passive: true });
+    // События
+    const handleScroll = () => {
+      if (!isDragging) { 
+        updateScrollbar();
+      }
+      showScrollbar();
+    };
+
+    const handleResize = () => {
+      updateScrollbar();
+      showScrollbar();
+    };
+
+    scrollbarTrack.addEventListener('click', handleTrackClick);
+    scrollbarThumb.addEventListener('mousedown', handleThumbMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    updateScrollbar();
     
-    window.addEventListener('resize', () => {
-      scheduleUpdate();
-      showThenHide();
-    }, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
-      overlay.remove();
-      if (raf) cancelAnimationFrame(raf);
-      if (hideT) clearTimeout(hideT);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      scrollbarTrack.removeEventListener('click', handleTrackClick);
+      scrollbarThumb.removeEventListener('mousedown', handleThumbMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      clearTimeout(hideTimer);
+      document.body.style.userSelect = '';
+      scrollbarTrack.remove();
     };
   }, []);
 }
