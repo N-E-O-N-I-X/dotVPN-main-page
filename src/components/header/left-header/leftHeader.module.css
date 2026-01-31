@@ -1,0 +1,41 @@
+.leftHeader {
+  text-align: left;
+  margin-left: 30%;
+  margin-right: 20px;
+}
+
+@media (width < 1050px) {
+  .leftHeader {
+    margin-left: 10%
+  }
+}
+
+@media (width < 500px) {
+   .leftHeader {
+    margin-left: 0
+  }
+}
+
+.logoSvg {
+  width: 30px;
+  height: 30px;
+}
+
+.logoSvgPath {
+  stroke: var(--main-color);
+  fill: var(--main-color);
+}
+
+.logoLink {
+  margin-top: 10px;
+}
+
+@media (width > 1400px) {
+  .logoLink {
+    cursor: default;
+  }
+  .logoSvgPath {
+    fill: none;
+    stroke: none;
+  }
+}

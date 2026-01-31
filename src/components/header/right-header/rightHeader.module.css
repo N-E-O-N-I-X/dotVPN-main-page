@@ -1,0 +1,193 @@
+.rightHeader{
+  margin-right: 30%;
+  text-align: right;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@media (width < 1050px) {
+  .rightHeader {
+    margin-right: 10%;
+   }
+}
+
+@media (width < 500px) {
+  .rightHeader {
+    margin-right: -10px;
+  }
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  word-spacing: nowrap;
+  color: var(--font-color);
+  padding: 5px 8px 8px;
+    background:
+      linear-gradient(var(--main-color),var(--main-color)) left top / 8px 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) left top / 1px 8px no-repeat,
+
+      linear-gradient(var(--main-color),var(--main-color)) right top / 8px 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) right top / 1px 8px no-repeat,
+
+      linear-gradient(var(--main-color),var(--main-color)) left bottom / 8px 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) left bottom / 1px 8px no-repeat,
+
+      linear-gradient(var(--main-color),var(--main-color)) right bottom / 8px 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) right bottom / 1px 8px no-repeat;
+  font-size: clamp(0.875rem, 0.8068rem + 0.3636vw, 1.125rem);
+}
+
+.downloadBtn:hover,
+.downloadBtn:focus {
+  background:
+      linear-gradient(var(--main-color),var(--main-color)) left top / 50% 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) left top / 1px 51% no-repeat,
+
+      linear-gradient(var(--main-color),var(--main-color)) right top / 50% 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) right top / 1px 50% no-repeat,
+
+      linear-gradient(var(--main-color),var(--main-color)) left bottom / 50% 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) left bottom / 1px 50% no-repeat,
+
+      linear-gradient(var(--main-color),var(--main-color)) right bottom / 50% 1px no-repeat,
+      linear-gradient(var(--main-color),var(--main-color)) right bottom / 1px 51% no-repeat;
+}
+
+@media (width <= 1400px) {
+  .downloadBtn {
+    display: none;
+  }
+}
+
+
+.downloadBtnSvg {
+  width: 24px;
+  height: 24px;
+}
+
+.downloadBtnSvgPath {
+  stroke: var(--main-color);
+}
+
+.burgerContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s ease, opacity 0.19s ease;
+}
+
+.burgerContainer.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.514);
+  z-index: 11;
+}
+
+.burgerWindow {
+  position: relative;
+  z-index: 12;
+  height: max-content;
+  width: max-content;
+  text-align: center;
+  box-shadow: 0 10px 15px #00000091;
+  background-color: var(--burger-color);
+  font-size: clamp(0.75rem, 0.625rem + 0.5714vw, 1.125rem);
+  padding: 8px 12px;
+  font-weight: 600;
+  margin: 98px 180px auto auto;
+}
+
+@media (width <= 1050px) {
+  .burgerWindow {
+    margin: 98px 50px auto auto;
+  }
+}
+
+@media (width <= 1000px) {
+  .burgerWindow {
+    margin: 20px;
+    width: 100%;
+    height: 90vh;
+  }
+}
+
+.closeBtn {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  color: var(--font-color);
+  font-size: 20px;
+}
+
+@media (width <= 1000px) {
+  .closeBtn {
+    display: block;
+  }
+}
+
+.burgerList {
+  list-style: none;
+  padding: 0;
+}
+
+@media (width <= 1000px) {
+  .burgerList {
+    margin-top: 40px;
+  }
+}
+
+.burgerItem {
+  cursor: pointer;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--burger-itm-color);
+}
+
+.burgerItem:hover {
+  background-color: var(--burger-itm-hover-color);
+}
+
+.burgerItem:last-child {
+  border-bottom: none;
+}
+
+.burgerBtn {
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (width > 1400px) {
+  .burgerBtn {
+    display: none;
+  }
+}
+
+.burgerBtnSvg {
+  width: 30px;
+  height: 30px;
+}
+
+.burgerBtnSvgPath {
+  stroke: var(--main-color);
+} 
