@@ -1,0 +1,52 @@
+.centerHeader{
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 60px);
+  display: none;
+  align-items: center;
+}
+
+@media (width > 1400px) {
+  .centerHeader {
+    display: flex;
+  }
+}
+
+.centerHeaderLink {
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.centerHeaderLink:hover {
+  font-weight: bold;
+}
+
+.focusLine {
+  position: relative;
+}
+
+.focusLine::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--main-color);
+  transition: width 0.3s ease;
+}
+
+.focusLine:focus::after,
+.focusLine:hover::after {
+  width: 100%;
+}
+
+.logoSvg {
+  width: 30px;
+  height: 30px;
+}
+
+.logoSvgPath {
+  stroke: var(--main-color);
+  fill: var(--main-color);
+}

@@ -1,0 +1,15 @@
+.header {
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  font-size: clamp(0.875rem, 0.8068rem + 0.3636vw, 1.125rem);
+  font-weight: normal;
+  padding: 30px 80px 20px;
+  text-transform: lowercase;
+}
+
+@media (width <= 1400px) {
+  .header {
+    grid-template-columns: 1fr 1fr;
+  }
+}
