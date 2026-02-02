@@ -1,0 +1,86 @@
+.footer {
+  height: auto;
+  padding: 20px 16px 12px;
+  font-size: clamp(0.625rem, 0.4583rem + 0.7619vw, 1.125rem);
+  border-top: 1px solid var(--main-color);
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.footer nav {
+  display: grid;
+  margin: 20px 20px;
+  grid-template-columns: 1fr min-content 1fr;
+  justify-content: center;
+  gap: clamp(12px, 3vw, 60px);
+}
+
+@media (width < 760px) {
+  .footer nav {
+    margin-bottom: 40px;
+  }
+}
+
+.conf {
+  text-align: end;
+}
+
+.rules {
+  text-align: start;
+}
+
+@media (width < 940px) {
+  .footer nav svg {
+    display: none;
+  }
+  .footer nav {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0;
+  }
+  .conf {
+    text-align: center;
+  }
+
+  .rules {
+    text-align: center;
+  }
+}
+
+.footer nav a:hover {
+  font-weight: bold;
+}
+
+.footer nav a:focus {
+  font-weight: bold;
+}
+
+.logoSvgLeft {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  display: none;
+}
+
+@media (width < 940px) {
+  .logoSvgLeft {
+    display: block;
+  }
+}
+
+@media (width < 430px) {
+  .logoSvgLeft  {
+    width: 18px;
+  }
+}
+
+@media (width < 360px) {
+  .logoSvgLeft  {
+    width: 16px;
+  }
+}
+
+.logoLink {
+  margin-top: -2px;
+}
