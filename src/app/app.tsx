@@ -8,6 +8,7 @@ import style from './app.module.css';
 
 import { Header } from '../components/header/header';
 import { Main } from '../components/main/main';
+import { Footer } from '../components/footer/footer';
 
 import { useTheme } from '../hooks/useTheme';
 import { useScrollbar } from '../hooks/useScrollbar';
@@ -20,6 +21,7 @@ export const App = () => {
     <div className={style.page}>
       <Header />
       <Main />
+      <Footer />
     </div>
   );
 };

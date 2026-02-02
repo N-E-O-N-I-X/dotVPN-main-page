@@ -44,9 +44,15 @@
 .logoSvg {
   width: 30px;
   height: 30px;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .logoSvgPath {
   stroke: var(--main-color);
   fill: var(--main-color);
+}
+
+.logoLink:hover .logoSvg,
+.logoLink:focus .logoSvg {
+  transform: scale(1.15);
 }
