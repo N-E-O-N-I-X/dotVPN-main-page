@@ -162,7 +162,8 @@
   border-bottom: 1px solid var(--burger-itm-color);
 }
 
-.burgerItem:hover {
+.burgerItem:hover
+.burgerItem:focus {
   background-color: var(--burger-itm-hover-color);
 }
 
@@ -185,8 +186,14 @@
 .burgerBtnSvg {
   width: 30px;
   height: 30px;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.burgerBtn:hover .burgerBtnSvg,
+.burgerBtn:focus .burgerBtnSvg {
+  transform: scale(1.15);
 }
 
 .burgerBtnSvgPath {
   stroke: var(--main-color);
-} 
+}
