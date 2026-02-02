@@ -3,9 +3,11 @@ import '../styles/variables.css';
 import '../styles/light.css';
 import '../styles/dark.css';
 import '../styles/scrollbar.css';
+import '../styles/animations.css';
 import style from './app.module.css';
 
 import { Header } from '../components/header/header';
+import { Main } from '../components/main/main';
 
 import { useTheme } from '../hooks/useTheme';
 import { useScrollbar } from '../hooks/useScrollbar';
@@ -17,6 +19,7 @@ export const App = () => {
   return (
     <div className={style.page}>
       <Header />
+      <Main />
     </div>
   );
 };
