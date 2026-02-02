@@ -30,6 +30,7 @@
 @media (width > 1400px) {
   .logoLink {
     cursor: default;
+    pointer-events: none;
   }
   .logoSvgPath {
     fill: none;
